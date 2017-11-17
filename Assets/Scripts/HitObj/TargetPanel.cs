@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetPanel : HitObject {
+public class TargetPanel : HitObject     {
 
     Animator anim;
     public AudioSource m_HitAudio;
