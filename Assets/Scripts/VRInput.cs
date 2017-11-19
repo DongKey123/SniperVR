@@ -40,15 +40,15 @@ namespace Dongkey
         protected virtual void CheckInput()
         {
 #if ParadoxWork
-			if ( OVRInput.GetDown( OVRInput.Button.PrimaryIndexTrigger ) || 
-				OVRInput.GetDown( OVRInput.Button.SecondaryIndexTrigger ) ||
+			if ( OVRInput.GetDown( OVRInput.Button.One , OVRInput.Controller.LTouch ) || 
+				OVRInput.GetDown( OVRInput.Button.One, OVRInput.Controller.RTouch ) ||
 				Input.GetButtonDown("Fire1") )
 			{
 				m_PressKey = true;
 				m_KeyEventOn = true;
 			}
-			if ( OVRInput.GetUp( OVRInput.Button.PrimaryIndexTrigger ) || 
-				OVRInput.GetUp( OVRInput.Button.SecondaryIndexTrigger ) ||
+			if ( OVRInput.GetUp( OVRInput.Button.One, OVRInput.Controller.LTouch ) || 
+				OVRInput.GetUp( OVRInput.Button.One, OVRInput.Controller.RTouch ) ||
 				Input.GetButtonUp( "Fire1" ) )
 			{
 				m_PressKey = false;

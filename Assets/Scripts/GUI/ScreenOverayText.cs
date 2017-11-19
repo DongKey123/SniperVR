@@ -42,6 +42,7 @@ namespace Paradox
 		// Use this for initialization
 		void Start()
 		{
+			m_NowTime = _SkipNextPageTime;
 		}
 
 		// Update is called once per frame
@@ -72,6 +73,7 @@ namespace Paradox
 
 		public void NextTextFromAcessText( bool beForced = false)
 		{
+			Debug.Log( "Called" );
 			if (!beForced && _Lock )
 				return;
 			if ( m_CurrentIndex >= m_LoadTextMessage.Count )
