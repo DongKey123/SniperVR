@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TargetPanel : HitObject     {
 
     Animator anim;
     public AudioSource m_HitAudio;
+    public Action Over;
 
     // Use this for initialization
     void Start () {
@@ -20,6 +22,9 @@ public class TargetPanel : HitObject     {
 
     public override void Hit()
     {
+        if (Over != null)
+            Over();
+
         Debug.Log("Panel Hit");
         this.GetComponent<Collider>().enabled = false;
         m_HitAudio.Play();
