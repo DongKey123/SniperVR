@@ -73,7 +73,6 @@ namespace Paradox
 
 		public void NextTextFromAcessText( bool beForced = false)
 		{
-			Debug.Log( "Called" );
 			if (!beForced && _Lock )
 				return;
 			if ( m_CurrentIndex >= m_LoadTextMessage.Count )

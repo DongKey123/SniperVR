@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Stage1 : MonoBehaviour {
 
@@ -10,6 +11,18 @@ public class Stage1 : MonoBehaviour {
 		_isStartShotRiffle = false;
 		_GUIText._Lock = true;
 		_GUIText.LoadScript( "Texts/Stage1" );
+
+		_maxTargetAmount = _TargetObjParentTransform.childCount;
+		_shotTargetAmount = 0;
+
+		for ( int i = 0; i < _maxTargetAmount; i++ )
+		{
+			if ( _TargetObjParentTransform.GetChild( i ) != null )
+			{
+				if ( _TargetObjParentTransform.GetChild( i ).GetComponent<TargetPanel>() != null )
+					_TargetObjParentTransform.GetChild( i ).GetComponent<TargetPanel>().Over += AddShotTargetAmount;
+			}
+		}
 
 		StartCoroutine( "Tutorial" );
 	}
@@ -39,6 +52,12 @@ public class Stage1 : MonoBehaviour {
 		_SniperRifle.SetActive( true );
 		_GUIText.gameObject.SetActive( false );
 
+		while ( _shotTargetAmount < _maxTargetAmount )
+		{
+			yield return new WaitForEndOfFrame();
+		}
+
+		SceneManager.LoadScene( "scene 1" );
 		//nextScene
 	}
 
@@ -47,10 +66,22 @@ public class Stage1 : MonoBehaviour {
 		_isStartShotRiffle = true;
 	}
 
+	void AddShotTargetAmount()
+	{
+		_shotTargetAmount++;
+	}
+
 	public Dongkey.CameraFade		_GUIFrontScreen;
 	public Paradox.ScreenOverayText _GUIText;
 
 	public GameObject				_SniperRifle;
 
+	[SerializeField]
+	private Transform				_TargetObjParentTransform;
+
 	bool							_isStartShotRiffle;
+
+	int								_maxTargetAmount;
+	int								_shotTargetAmount;
+
 }
