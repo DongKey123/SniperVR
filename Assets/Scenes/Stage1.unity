@@ -195,6 +195,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 4.48
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -35547,7 +35561,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11478652, guid: f1451464beb26694d8782b060c9d22cb, type: 2}
       propertyPath: helpbox
-      value: 117
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 11446696, guid: f1451464beb26694d8782b060c9d22cb, type: 2}
       propertyPath: m_CenterEyeAnchor
@@ -42475,6 +42489,7 @@ GameObject:
   - component: {fileID: 2011250328}
   - component: {fileID: 2011250327}
   - component: {fileID: 2011250324}
+  - component: {fileID: 2011250325}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -42509,6 +42524,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DoubleClickTime: 0.3
+--- !u!114 &2011250325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2011250322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: f5cad0a8a0b4fc84182166ada23e8b02, type: 2}
 --- !u!20 &2011250327
 Camera:
   m_ObjectHideFlags: 0
@@ -42535,7 +42562,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
