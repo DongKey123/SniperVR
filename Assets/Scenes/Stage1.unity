@@ -11552,7 +11552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Controller: {fileID: 2011250324}
   _ScreenText: {fileID: 559074739}
-  _SkipNextPageTime: 30
+  _SkipNextPageTime: 5
   _Lock: 0
 --- !u!222 &559074741
 CanvasRenderer:
