@@ -21,13 +21,12 @@ public class ZombieFSMTrace : FSMState<Zombie> {
 
     public override void EnterState(Zombie owner)
     {
-        Debug.Log("Enter");
+		owner.m_navMeshAgent.isStopped = false;
         owner.anim.Play("Walk");
     }
 
     public override void UpdateState(Zombie owner)
     {
-        Debug.Log("Enter");
         Debug.Log(Camera.main.transform.position);
         owner.m_navMeshAgent.SetDestination(Camera.main.transform.position);
 

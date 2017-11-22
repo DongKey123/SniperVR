@@ -21,8 +21,10 @@ public class ZombieFSMDeath : Dongkey.FSMState<Zombie>
 
     public override void EnterState(Zombie owner)
     {
-
-    }
+		owner.m_navMeshAgent.isStopped = true;
+		owner.anim.Play( "Death" );
+		GameObject.Destroy( owner.gameObject, 2f );
+	}
 
     public override void UpdateState(Zombie owner)
     {

@@ -34,7 +34,9 @@ public class Zombie : HitObject {
 
     public override void Hit()
     {
-        if(m_CurHp <= 0)
+		m_CurHp--;
+
+		if (m_CurHp <= 0)
         {
             m_stateMachine.ChangeState(ZombieFSMDeath.Instance);
         }
