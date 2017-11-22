@@ -25,7 +25,12 @@ public class Zombie : HitObject {
         m_stateMachine = new FSMStateMachine<Zombie>();
         m_stateMachine.InitialSetting(this, ZombieFSMTrace.Instance);
     }
-	
+
+	void OnDestroy()
+	{
+		m_stateMachine = null;
+	}
+
 	// Update is called once per frame
 	void Update () {
         //m_navMeshAgent.SetDestination(m_Target.position);
