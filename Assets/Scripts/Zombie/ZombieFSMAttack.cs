@@ -19,7 +19,7 @@ public class ZombieFSMAttack : Dongkey.FSMState<Zombie> {
 
     public override void EnterState(Zombie owner)
     {
-
+        owner.anim.Play("Atack (1)");
     }
 
     public override void UpdateState(Zombie owner)

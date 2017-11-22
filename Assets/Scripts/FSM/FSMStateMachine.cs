@@ -16,7 +16,7 @@ namespace Dongkey
         {
             Init();
             _Owner = owner;
-        
+            ChangeState(_InitialState);
         }
 
         //초기화
