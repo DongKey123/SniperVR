@@ -56,4 +56,9 @@ public class Zombie : HitObject {
     {
         m_stateMachine.ChangeState(state);
     }
+
+	public void KillHero()
+	{
+		m_Target.GetComponent<Hero>().Death();
+	}
 }
