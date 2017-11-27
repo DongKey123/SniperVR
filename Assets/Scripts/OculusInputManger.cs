@@ -25,7 +25,7 @@ public class OculusInputManger : MonoBehaviour {
             }
         }
         //Zoom Change
-        else if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.LTouch ) )
+        else if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.LTouch ) )
         {
             if(ZoomIn != null)
             {
@@ -33,7 +33,7 @@ public class OculusInputManger : MonoBehaviour {
             }
         }
         //Zoom Change
-        else if (OVRInput.Get(OVRInput.Button.PrimaryHandTrigger,OVRInput.Controller.LTouch))
+        else if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger,OVRInput.Controller.LTouch))
         {
             if (ZoomOut != null)
             {

@@ -20,12 +20,19 @@ public class TargetPanel : HitObject     {
 		
 	}
 
-    public override void Hit()
+    public override void Hit(float distance)
     {
         if (Over != null)
             Over();
 
-        Debug.Log("Panel Hit");
+        float Delay = distance / 100;
+
+        Invoke("HitDelay", Delay);
+        
+    }
+
+    void HitDelay()
+    {
         this.GetComponent<Collider>().enabled = false;
         m_HitAudio.Play();
         anim.Play("Hit");

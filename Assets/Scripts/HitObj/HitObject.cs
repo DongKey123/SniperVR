@@ -20,7 +20,7 @@ public class HitObject : MonoBehaviour {
 		
 	}
 
-    public virtual void Hit()
+    public virtual void Hit(float distance)
     {
         Debug.Log("Hit Object");
     }

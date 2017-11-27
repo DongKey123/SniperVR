@@ -13,6 +13,8 @@ public class Sniper : MonoBehaviour {
     public Transform m_Muzzle;
     public Transform m_LookAtTR;
 
+    public float m_ReboundPower = 2f;
+
     private bool IsAtkDelaying = false;
     public float m_AtkDelayTime = 2.5f;
 
@@ -64,27 +66,28 @@ public class Sniper : MonoBehaviour {
             Invoke("Reload", m_AtkDelayTime);
         }
         RaycastHit hit;
-        if(Physics.Raycast(m_Muzzle.position, m_Muzzle.forward,out hit))
+        StartCoroutine(ReBound());
+        if (Physics.Raycast(m_Muzzle.position, m_Muzzle.forward,out hit))
         {
             Debug.Log(hit.transform.name);
             if(hit.transform.tag == "HitObj")
             {
                 HitObject hitobj = hit.transform.GetComponent<HitObject>();
-                hitobj.Hit();
+                hitobj.Hit(Vector3.Distance(hitobj.transform.position,this.transform.position));
             }
         }
     }
 
     void ZoomIn()
     {
-        m_ScopeCamera.fieldOfView -= Time.deltaTime * m_ZoomSpeed;
-        Mathf.Clamp(m_ScopeCamera.fieldOfView, m_MinFOV, m_MaxFOV);
+        m_ScopeCamera.fieldOfView *= 0.5f;
+        m_ScopeCamera.fieldOfView = Mathf.Clamp(m_ScopeCamera.fieldOfView, m_MinFOV, m_MaxFOV);
     }
 
     void ZoomOut()
     {
-        m_ScopeCamera.fieldOfView += Time.deltaTime * m_ZoomSpeed;
-        Mathf.Clamp(m_ScopeCamera.fieldOfView, m_MinFOV, m_MaxFOV);
+        m_ScopeCamera.fieldOfView *= 2f;
+        m_ScopeCamera.fieldOfView = Mathf.Clamp(m_ScopeCamera.fieldOfView, m_MinFOV, m_MaxFOV);
     }
 
     void ChangeAtkDelay()
@@ -102,4 +105,37 @@ public class Sniper : MonoBehaviour {
     {
         m_curBullets = m_maxBullets;
     }
+
+    IEnumerator ReBound()
+    {
+        float time = 0;
+        Vector3 origin = this.transform.position;
+        //while(true)
+        //{
+        //    time += Time.deltaTime;
+        //    this.transform.position += -this.transform.forward * m_ReboundPower * Time.deltaTime;
+        //    if(time > 0.5f)
+        //    {
+        //        time = 0;
+        //        break;
+        //    }
+        //    yield return null;
+        //}
+        this.transform.position += -this.transform.forward * m_ReboundPower;
+
+        while (true)
+        {
+            time += Time.deltaTime;
+            this.transform.position += this.transform.forward * m_ReboundPower * Time.deltaTime;
+            if (time > 0.5f)
+            {
+                time = 0;
+                this.transform.position = origin;
+                break;
+            }
+            yield return null;
+        }
+    }
+
+   
 }

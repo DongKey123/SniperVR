@@ -37,9 +37,10 @@ public class Zombie : HitObject {
         m_stateMachine.Update();
 	}
 
-    public override void Hit()
+    public override void Hit(float distance)
     {
-		m_CurHp--;
+        base.Hit(distance);
+        m_CurHp--;
 
 		if (m_CurHp <= 0)
         {
@@ -49,7 +50,6 @@ public class Zombie : HitObject {
         {
             m_stateMachine.ChangeState(ZombieFSMHit.Instance);
         }
-        base.Hit(); 
     }
 
     public void ChangeState(FSMState<Zombie> state)

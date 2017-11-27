@@ -1502,7 +1502,7 @@ Prefab:
         type: 2}
       propertyPath: m_LookAtTR
       value: 
-      objectReference: {fileID: 2105916427}
+      objectReference: {fileID: 1819745313}
     - target: {fileID: 4815592603092842, guid: d9f68194dbd83f04b8720415c4bf901c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1.7678239
@@ -1634,7 +1634,7 @@ Prefab:
     - target: {fileID: 114039381512401380, guid: d9f68194dbd83f04b8720415c4bf901c,
         type: 2}
       propertyPath: m_AtkDelayTime
-      value: 3.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114039381512401380, guid: d9f68194dbd83f04b8720415c4bf901c,
         type: 2}
@@ -1649,6 +1649,16 @@ Prefab:
     - target: {fileID: 1094364535657718, guid: d9f68194dbd83f04b8720415c4bf901c, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039381512401380, guid: d9f68194dbd83f04b8720415c4bf901c,
+        type: 2}
+      propertyPath: m_MaxFOV
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039381512401380, guid: d9f68194dbd83f04b8720415c4bf901c,
+        type: 2}
+      propertyPath: m_ReboundPower
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d9f68194dbd83f04b8720415c4bf901c, type: 2}
