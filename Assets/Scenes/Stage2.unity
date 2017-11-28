@@ -15871,7 +15871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &964771032
 Transform:
   m_ObjectHideFlags: 0
@@ -21325,7 +21325,8 @@ MonoBehaviour:
   m_ScopeCamera: {fileID: 152886652}
   m_ZoomSpeed: 4
   m_Muzzle: {fileID: 152886648}
-  m_LookAtTR: {fileID: 437599401}
+  m_LookAtTR: {fileID: 582411930}
+  m_ReboundPower: 2
   m_AtkDelayTime: 3.5
   m_maxBullets: 10
   m_curBullets: 10

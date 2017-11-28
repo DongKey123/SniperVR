@@ -57,7 +57,7 @@ public class Stage1 : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 
-		SceneManager.LoadScene( "scene 1" );
+		SceneManager.LoadScene( "Stage2" );
 		//nextScene
 	}
 

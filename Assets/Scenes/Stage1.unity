@@ -156,7 +156,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40}
-  m_LocalRotation: {x: -0.31184927, y: -0.8178071, z: 0.4738415, w: -0.09703489}
+  m_LocalRotation: {x: -0.3118493, y: -0.81780714, z: 0.47384152, w: -0.097034894}
   m_LocalPosition: {x: 117.1211, y: 131.83975, z: -103.91082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -10769,7 +10769,7 @@ Prefab:
     - target: {fileID: 82426417015789248, guid: d2faf783fa56ec147b9a101e6f2ed276,
         type: 2}
       propertyPath: MinDistance
-      value: 9.936005
+      value: 3.821274
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2faf783fa56ec147b9a101e6f2ed276, type: 2}
@@ -15352,11 +15352,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11402512, guid: 62f5d79161a68ba4391475316cbf828d, type: 2}
       propertyPath: helpbox
-      value: 166
+      value: 188
       objectReference: {fileID: 0}
     - target: {fileID: 11483842, guid: 62f5d79161a68ba4391475316cbf828d, type: 2}
       propertyPath: surfaceTypeHelp
-      value: 117
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 8211020, guid: 62f5d79161a68ba4391475316cbf828d, type: 2}
       propertyPath: panLevelCustomCurve.m_RotationOrder
@@ -15372,7 +15372,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11417338, guid: 62f5d79161a68ba4391475316cbf828d, type: 2}
       propertyPath: surfaceTypeHelp
-      value: 139
+      value: 205
       objectReference: {fileID: 0}
     - target: {fileID: 11483746, guid: 62f5d79161a68ba4391475316cbf828d, type: 2}
       propertyPath: m_Enabled
@@ -38493,7 +38493,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11478652, guid: f1451464beb26694d8782b060c9d22cb, type: 2}
       propertyPath: helpbox
-      value: 117
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 11446696, guid: f1451464beb26694d8782b060c9d22cb, type: 2}
       propertyPath: m_CenterEyeAnchor
