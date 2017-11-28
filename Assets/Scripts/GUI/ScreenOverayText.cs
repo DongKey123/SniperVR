@@ -51,6 +51,11 @@ namespace Paradox
 			CheckAutoNextText();
 		}
 
+		public int GetCurrentScriptIndex()
+		{
+			return m_CurrentIndex;
+		}
+
 		public int GetMaxScript()
 		{
 			if ( m_LoadTextMessage == null )
@@ -79,10 +84,10 @@ namespace Paradox
 				return;
 
 			m_NowTime = _SkipNextPageTime;
+			m_CurrentIndex++;
 
 			if ( PageDown != null )
 				PageDown();
-			m_CurrentIndex++;
 
 			if ( m_CurrentIndex >= m_LoadTextMessage.Count )
 			{
