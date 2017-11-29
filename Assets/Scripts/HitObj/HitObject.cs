@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class HitObject : MonoBehaviour {
 
-    
-
     void Awake()
     {
         this.transform.tag = "HitObj";
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 	}
 	
 	// Update is called once per frame
@@ -20,7 +19,7 @@ public class HitObject : MonoBehaviour {
 		
 	}
 
-    public virtual void Hit(float distance)
+    public virtual void Hit(Vector3 hitPosition, float distance)
     {
         Debug.Log("Hit Object");
     }
