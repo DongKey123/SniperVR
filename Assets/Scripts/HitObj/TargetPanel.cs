@@ -9,8 +9,12 @@ public class TargetPanel : HitObject     {
     public AudioSource m_HitAudio;
     public Action Over;
 
-    // Use this for initialization
-    void Start () {
+	Vector3 raycastHitPoint;
+
+	[SerializeField]
+	ImpactWood hitEffect;
+	// Use this for initialization
+	void Start () {
 
         OVRHapticsClip clip = new OVRHapticsClip(1);
 
@@ -22,20 +26,23 @@ public class TargetPanel : HitObject     {
 		
 	}
 
-    public override void Hit(float distance)
+    public override void Hit(Vector3 hitPosition, float distance)
     {
         if (Over != null)
             Over();
 
         float Delay = distance / 100;
-
-        Invoke("HitDelay", Delay);
+		raycastHitPoint = hitPosition;
+		Invoke("HitDelay", Delay);
         
     }
 
     void HitDelay()
     {
-        this.GetComponent<Collider>().enabled = false;
+		hitEffect.transform.position = raycastHitPoint;
+		hitEffect.Play();
+
+		this.GetComponent<Collider>().enabled = false;
         m_HitAudio.Play();
         anim.Play("Hit");
     }

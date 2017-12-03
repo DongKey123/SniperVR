@@ -9,6 +9,7 @@ public class Stage1 : MonoBehaviour {
 	void Start ()
 	{
 		_isStartShotRiffle = false;
+
 		_GUIText._Lock = true;
 		_GUIText.LoadScript( "Texts/Stage1" );
 
@@ -34,13 +35,12 @@ public class Stage1 : MonoBehaviour {
 
 	IEnumerator Tutorial()
 	{
-		_GUIText.TextDone += RiffleShotStart;
-		
 		while ( _GUIFrontScreen.IsFading )
 		{
 			yield return new WaitForEndOfFrame();
 		}
 
+		_GUIText.PageDown += CheckGameStart;
 		_GUIText._Lock = false;
 		_GUIText.gameObject.SetActive( true );
 
@@ -50,15 +50,15 @@ public class Stage1 : MonoBehaviour {
 		}
 
 		_SniperRifle.SetActive( true );
-		_GUIText.gameObject.SetActive( false );
 
 		while ( _shotTargetAmount < _maxTargetAmount )
 		{
 			yield return new WaitForEndOfFrame();
 		}
 
-		SceneManager.LoadScene( "Stage2" );
-		//nextScene
+		_GUIText._Lock = false;
+		_GUIText.gameObject.SetActive( true );
+		_GUIText.TextDone += FrontScreenFadeOut;
 	}
 
 	void RiffleShotStart()
@@ -70,6 +70,29 @@ public class Stage1 : MonoBehaviour {
 	{
 		_shotTargetAmount++;
 	}
+
+	void CheckGameStart()
+	{
+		if ( _GUIText.GetCurrentScriptIndex() >= 4 )
+		{
+			_GUIText.PageDown -= CheckGameStart;
+			_GUIText.gameObject.SetActive( false );
+			_GUIText._Lock = true;
+			_isStartShotRiffle = true;
+		}
+	}
+
+	void FrontScreenFadeOut()
+	{
+		_GUIFrontScreen.OnFadeComplete += GoNextLevel;
+		_GUIFrontScreen.FadeOut();
+	}
+
+	void GoNextLevel()
+	{
+		SceneManager.LoadScene( "Stage2" );
+	}
+
 
 	public Dongkey.CameraFade		_GUIFrontScreen;
 	public Paradox.ScreenOverayText _GUIText;

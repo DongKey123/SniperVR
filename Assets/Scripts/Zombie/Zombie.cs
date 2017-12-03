@@ -13,9 +13,12 @@ public class Zombie : HitObject {
     public NavMeshAgent m_navMeshAgent;
     [SerializeField]
     public Transform m_Target;
-
+	
     int m_CurHp;
     public int m_MaxHp = 1;
+
+	Vector3 m_RaycastHitPoint;
+
 
 	// Use this for initialization
 	void Start () {
@@ -37,9 +40,9 @@ public class Zombie : HitObject {
         m_stateMachine.Update();
 	}
 
-    public override void Hit(float distance)
+    public override void Hit(Vector3 hitPoint, float distance)
     {
-        base.Hit(distance);
+        base.Hit(hitPoint, distance);
         m_CurHp--;
         
 

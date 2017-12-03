@@ -73,7 +73,7 @@ public class Sniper : MonoBehaviour {
             if(hit.transform.tag == "HitObj")
             {
                 HitObject hitobj = hit.transform.GetComponent<HitObject>();
-                hitobj.Hit(Vector3.Distance(hitobj.transform.position,this.transform.position));
+                hitobj.Hit( hit.point, Vector3.Distance(hitobj.transform.position,this.transform.position));
             }
         }
     }
