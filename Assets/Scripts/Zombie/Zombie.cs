@@ -13,6 +13,9 @@ public class Zombie : HitObject {
     public NavMeshAgent m_navMeshAgent;
     [SerializeField]
     public Transform m_Target;
+
+	[SerializeField]
+	private ImpactBlood _bloodFX;
 	
     int m_CurHp;
     public int m_MaxHp = 1;
@@ -44,7 +47,9 @@ public class Zombie : HitObject {
     {
         base.Hit(hitPoint, distance);
         m_CurHp--;
-        
+
+		if(_bloodFX != null)
+			_bloodFX.Play();
 
 		if (m_CurHp <= 0)
         {

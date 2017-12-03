@@ -25,6 +25,9 @@ public class Sniper : MonoBehaviour {
     public bool m_ReloadAudioCk = true;
     public AudioSource m_ShootAudio;
 
+	[SerializeField]
+	private ParticleSystem _nuzzleParticle;
+
     void OnEnable()
     {
         m_Input.Shoot += this.Shoot;
@@ -34,7 +37,7 @@ public class Sniper : MonoBehaviour {
 
     void OnDisable()
     {
-
+		CancelInvoke();
     }
 
 	// Use this for initialization
@@ -68,7 +71,11 @@ public class Sniper : MonoBehaviour {
         {
             Invoke("Reload", m_AtkDelayTime);
         }
-        RaycastHit hit;
+
+		_nuzzleParticle.Clear();
+		_nuzzleParticle.Play();
+
+		RaycastHit hit;
         StartCoroutine(ReBound());
         if (Physics.Raycast(m_Muzzle.position, m_Muzzle.forward,out hit))
         {
