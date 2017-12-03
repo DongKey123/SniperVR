@@ -12,6 +12,8 @@ public class TargetPanel : HitObject     {
     // Use this for initialization
     void Start () {
 
+        OVRHapticsClip clip = new OVRHapticsClip(1);
+
         anim = this.GetComponent<Animator>();
     }
 	

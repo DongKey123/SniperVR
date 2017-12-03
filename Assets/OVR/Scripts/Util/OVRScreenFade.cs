@@ -20,7 +20,6 @@ limitations under the License.
 ************************************************************************************/
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections; // required for Coroutines
 
 /// <summary>
@@ -51,34 +50,25 @@ public class OVRScreenFade : MonoBehaviour
 		fadeMaterial = new Material(Shader.Find("Oculus/Unlit Transparent Color"));
 	}
 
-    private void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    /// <summary>
-    /// Starts the fade in
-    /// </summary>
-    void OnEnable()
+	/// <summary>
+	/// Starts the fade in
+	/// </summary>
+	void OnEnable()
 	{
-		StartCoroutine(FadeIn());        
-    }
+		StartCoroutine(FadeIn());
+	}
 
 	/// <summary>
 	/// Starts a fade in when a new level is loaded
 	/// </summary>
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        StartCoroutine(FadeIn());
-    }
-//#if UNITY_5_4_OR_NEWER
-//	void OnLevelFinishedLoading(int level)
-//#else
-//	void OnLevelWasLoaded(int level)
-//#endif
-//	{
-//		StartCoroutine(FadeIn());
-//	}
+#if UNITY_5_4_OR_NEWER
+	void OnLevelFinishedLoading(int level)
+#else
+	void OnLevelWasLoaded(int level)
+#endif
+	{
+		StartCoroutine(FadeIn());
+	}
 
 	/// <summary>
 	/// Cleans up the fade material

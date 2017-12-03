@@ -27,7 +27,6 @@ public class ZombieFSMTrace : FSMState<Zombie> {
 
     public override void UpdateState(Zombie owner)
     {
-        Debug.Log(Camera.main.transform.position);
         owner.m_navMeshAgent.SetDestination(Camera.main.transform.position);
 
         if(Vector3.Distance(owner.transform.position,Camera.main.transform.position) < 10f)

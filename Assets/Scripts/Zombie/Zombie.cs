@@ -41,6 +41,7 @@ public class Zombie : HitObject {
     {
         base.Hit(distance);
         m_CurHp--;
+        
 
 		if (m_CurHp <= 0)
         {
