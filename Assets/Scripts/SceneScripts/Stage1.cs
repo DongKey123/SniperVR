@@ -25,6 +25,10 @@ public class Stage1 : MonoBehaviour {
 			}
 		}
 
+		//랜덤 타겟 일어남 체크();
+		//_maxTargetAmount = _RandomAwakeAmount + 1;
+		_maxTargetAmount = _RandomAwakeAmount;
+
 		StartCoroutine( "Tutorial" );
 	}
 	
@@ -47,6 +51,25 @@ public class Stage1 : MonoBehaviour {
 		while ( !_isStartShotRiffle )
 		{
 			yield return new WaitForEndOfFrame();
+		}
+
+		int randomIndex = -1;
+		int currentAmount = _RandomAwakeAmount;
+		TargetPanel value = null;
+		//타겟 솟아오르기;
+		while ( true )
+		{
+			if ( currentAmount <= 0 )
+				break;
+
+			randomIndex = Random.Range( 0, _TargetObjParentTransform.childCount );
+			value = _TargetObjParentTransform.GetChild( randomIndex ).GetComponent<TargetPanel>();
+
+			if ( value.IsChooseRandomWake() )
+				continue;
+
+			value.WakeUp();
+			currentAmount--;
 		}
 
 		_SniperRifle.SetActive( true );
@@ -101,6 +124,9 @@ public class Stage1 : MonoBehaviour {
 
 	[SerializeField]
 	private Transform				_TargetObjParentTransform;
+
+	[SerializeField]
+	private int						_RandomAwakeAmount;
 
 	bool							_isStartShotRiffle;
 

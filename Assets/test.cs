@@ -14,11 +14,11 @@ public class test : MonoBehaviour {
 	{
 		if ( Input.GetMouseButtonDown( 0 ) )
 		{
-			_r.Play();
+			_r.Play( "WakeUp" );
 		}
 
 	}
 
 	[SerializeField]
-	BloodSplatRender _r;
+	Animator _r;
 }

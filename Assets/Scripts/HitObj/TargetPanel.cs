@@ -10,9 +10,11 @@ public class TargetPanel : HitObject     {
     public Action Over;
 
 	Vector3 raycastHitPoint;
+	bool isChooseRandomTarget = false;
 
 	[SerializeField]
 	ImpactWood hitEffect;
+
 	// Use this for initialization
 	void Start () {
 
@@ -26,7 +28,24 @@ public class TargetPanel : HitObject     {
 		
 	}
 
-    public override void Hit(Vector3 hitPosition, float distance)
+	public bool IsChooseRandomWake()
+	{
+		return isChooseRandomTarget;
+	}
+
+	public void WakeUp()
+	{
+		isChooseRandomTarget = true;
+		anim.Play( "WakeUp" );
+		Invoke( "ColliderOn", 0.25f );
+	}
+
+	void ColliderOn()
+	{
+		this.GetComponent<Collider>().enabled = true;
+	}
+
+	public override void Hit(Vector3 hitPosition, float distance)
     {
         if (Over != null)
             Over();
