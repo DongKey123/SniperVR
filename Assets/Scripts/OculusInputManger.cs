@@ -9,20 +9,25 @@ public class OculusInputManger : MonoBehaviour {
     public Action ZoomIn;
     public Action ZoomOut;
 
-    private OVRHapticsClip hapticsClip;
-    private float hapticsClipLength = 2f;
-    private float hapticsTimeout;
+    public OculusHapticsController hapticsController;
 
 	// Use this for initialization
 	void Start () {
-        hapticsClip = new OVRHapticsClip(2);
-        OVRHaptics.RightChannel.Preempt(hapticsClip);
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        //Shooting
-		if(OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch ) )
+
+        ////Test
+        //if(OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
+        //{
+        //    ////OVRHaptics.RightChannel.Preempt(clip);
+        //    //this.GetComponent<OculusHapticsController>().Vibrate(VibrationForce.Hard,OVRTouch.Left);
+        //    //this.GetComponent<OculusHapticsController>().Vibrate(VibrationForce.Hard, OVRTouch.Right);
+        //}
+            //Shooting
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch ) )
         {
             if(Shoot != null)
             {

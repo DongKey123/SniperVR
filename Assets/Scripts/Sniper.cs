@@ -57,6 +57,9 @@ public class Sniper : MonoBehaviour {
             return;
         
 
+        m_Input.hapticsController.Vibrate(VibrationForce.Hard, OVRTouch.Left);
+        m_Input.hapticsController.Vibrate(VibrationForce.Hard, OVRTouch.Right);
+
         IsAtkDelaying = true;
         Invoke("ChangeAtkDelay", m_AtkDelayTime);
         m_ShootAudio.Play();
