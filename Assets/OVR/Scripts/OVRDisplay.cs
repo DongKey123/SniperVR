@@ -98,12 +98,18 @@ public class OVRDisplay
 	/// </summary>
 	public void RecenterPose()
 	{
+#if UNITY_2017_2_OR_NEWER
+        UnityEngine.XR.InputTracking.Recenter();
+#else
         VR.InputTracking.Recenter();
-
+#endif
 		if (RecenteredPose != null)
 		{
 			RecenteredPose();
 		}
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+		OVRMixedReality.RecenterPose();
+#endif
 	}
 
 	/// <summary>
@@ -115,23 +121,21 @@ public class OVRDisplay
 			if (!OVRManager.isHmdPresent)
 				return Vector3.zero;
 
-            OVRPose ret = OVRPlugin.GetEyeAcceleration(OVRPlugin.Eye.None).ToOVRPose();
-            return ret.position;
+			return OVRPlugin.GetNodeAcceleration(OVRPlugin.Node.None, OVRPlugin.Step.Render).FromFlippedZVector3f();
 		}
 	}
 
     /// <summary>
     /// Gets the current angular acceleration of the head.
     /// </summary>
-    public Quaternion angularAcceleration
+    public Vector3 angularAcceleration
     {
         get
         {
             if (!OVRManager.isHmdPresent)
-                return Quaternion.identity;
+				return Vector3.zero;
 
-            OVRPose ret = OVRPlugin.GetEyeAcceleration(OVRPlugin.Eye.None).ToOVRPose();
-            return ret.orientation;
+			return OVRPlugin.GetNodeAngularAcceleration(OVRPlugin.Node.None, OVRPlugin.Step.Render).FromFlippedZVector3f() * Mathf.Rad2Deg;
         }
     }
 
@@ -145,29 +149,31 @@ public class OVRDisplay
             if (!OVRManager.isHmdPresent)
                 return Vector3.zero;
 
-            OVRPose ret = OVRPlugin.GetEyeVelocity(OVRPlugin.Eye.None).ToOVRPose();
-            return ret.position;
+			return OVRPlugin.GetNodeVelocity(OVRPlugin.Node.None, OVRPlugin.Step.Render).FromFlippedZVector3f();
         }
     }
 	
 	/// <summary>
 	/// Gets the current angular velocity of the head.
 	/// </summary>
-	public Quaternion angularVelocity
+	public Vector3 angularVelocity
 	{
 		get {
 			if (!OVRManager.isHmdPresent)
-				return Quaternion.identity;
+				return Vector3.zero;
 
-			OVRPose ret = OVRPlugin.GetEyeVelocity(OVRPlugin.Eye.None).ToOVRPose();
-			return ret.orientation;
+			return OVRPlugin.GetNodeAngularVelocity(OVRPlugin.Node.None, OVRPlugin.Step.Render).FromFlippedZVector3f() * Mathf.Rad2Deg;
 		}
 	}
 
 	/// <summary>
 	/// Gets the resolution and field of view for the given eye.
 	/// </summary>
+#if UNITY_2017_2_OR_NEWER
+    public EyeRenderDesc GetEyeRenderDesc(UnityEngine.XR.XRNode eye)
+#else
     public EyeRenderDesc GetEyeRenderDesc(VR.VRNode eye)
+#endif
 	{
 		return eyeDescs[(int)eye];
 	}
@@ -200,6 +206,20 @@ public class OVRDisplay
 	}
 
 	/// <summary>
+	/// Gets application's frame rate reported by oculus plugin
+	/// </summary>
+	public float appFramerate
+	{
+		get
+		{
+			if (!OVRManager.isHmdPresent)
+				return 0;
+
+			return OVRPlugin.GetAppFramerate();
+		}
+	}
+
+	/// <summary>
 	/// Gets the recommended MSAA level for optimal quality/performance the current device.
 	/// </summary>
 	public int recommendedMSAALevel
@@ -217,11 +237,20 @@ public class OVRDisplay
 
 	private void UpdateTextures()
 	{
+#if UNITY_2017_2_OR_NEWER
+		ConfigureEyeDesc(UnityEngine.XR.XRNode.LeftEye);
+        ConfigureEyeDesc(UnityEngine.XR.XRNode.RightEye);
+#else
 		ConfigureEyeDesc(VR.VRNode.LeftEye);
         ConfigureEyeDesc(VR.VRNode.RightEye);
+#endif
 	}
 
+#if UNITY_2017_2_OR_NEWER
+    private void ConfigureEyeDesc(UnityEngine.XR.XRNode eye)
+#else
     private void ConfigureEyeDesc(VR.VRNode eye)
+#endif
 	{
 		if (!OVRManager.isHmdPresent)
 			return;

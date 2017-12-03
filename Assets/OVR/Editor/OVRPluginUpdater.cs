@@ -19,7 +19,7 @@ limitations under the License.
 
 ************************************************************************************/
 
-#if UNITY_EDITOR_WIN && UNITY_5_4_OR_NEWER
+#if UNITY_5_4_OR_NEWER
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -70,11 +70,15 @@ class OVRPluginUpdater
 		return new PluginPackage()
 		{
 			RootPath = rootPath,
-			Version = GetPluginVersion(rootPath + GetPluginBuildTargetSubPath(BuildTarget.StandaloneWindows64)),
+			Version = GetPluginVersion(rootPath),
 			Plugins = new Dictionary<BuildTarget, string>()
 			{
 				{ BuildTarget.Android, rootPath + GetPluginBuildTargetSubPath(BuildTarget.Android) },
+#if UNITY_2017_3_OR_NEWER
+				{ BuildTarget.StandaloneOSX, rootPath + GetPluginBuildTargetSubPath(BuildTarget.StandaloneOSX) },
+#else
 				{ BuildTarget.StandaloneOSXUniversal, rootPath + GetPluginBuildTargetSubPath(BuildTarget.StandaloneOSXUniversal) },
+#endif
 				{ BuildTarget.StandaloneWindows, rootPath + GetPluginBuildTargetSubPath(BuildTarget.StandaloneWindows) },
 				{ BuildTarget.StandaloneWindows64, rootPath + GetPluginBuildTargetSubPath(BuildTarget.StandaloneWindows64) },
 			}
@@ -146,7 +150,11 @@ class OVRPluginUpdater
 			case BuildTarget.Android:
 				path = @"/Android/OVRPlugin.aar";
 				break;
+#if UNITY_2017_3_OR_NEWER
+			case BuildTarget.StandaloneOSX:
+#else
 			case BuildTarget.StandaloneOSXUniversal:
+#endif
 				path = @"/OSXUniversal/OVRPlugin.bundle";
 				break;
 			case BuildTarget.StandaloneWindows:
@@ -169,17 +177,41 @@ class OVRPluginUpdater
 
 	private static System.Version GetPluginVersion(string path)
 	{
-		if (!File.Exists(path))
+		System.Version invalidVersion = new System.Version("0.0.0");
+		System.Version pluginVersion = invalidVersion;
+
+		try
 		{
-			path += GetDisabledPluginSuffix();
-			if (!File.Exists(path))
-			{
-				return new System.Version("0.0.0");
-			}
+			pluginVersion = new System.Version(Path.GetFileName(path));
+		}
+		catch
+		{
+			pluginVersion = invalidVersion;
 		}
 
-		FileVersionInfo pluginVersionInfo = FileVersionInfo.GetVersionInfo(path);
-		return new System.Version(pluginVersionInfo.ProductVersion);
+		if (pluginVersion == invalidVersion)
+		{
+			//Unable to determine version from path, fallback to Win64 DLL meta data
+			path += GetPluginBuildTargetSubPath(BuildTarget.StandaloneWindows64);
+			if (!File.Exists(path))
+			{
+				path += GetDisabledPluginSuffix();
+				if (!File.Exists(path))
+				{
+					return invalidVersion;
+				}
+			}
+
+			FileVersionInfo pluginVersionInfo = FileVersionInfo.GetVersionInfo(path);
+			if (pluginVersionInfo == null || pluginVersionInfo.ProductVersion == null || pluginVersionInfo.ProductVersion == "")
+			{
+				return invalidVersion;
+			}
+
+			pluginVersion = new System.Version(pluginVersionInfo.ProductVersion);
+		}
+
+		return pluginVersion;
 	}
 	
 	private static bool ShouldAttemptPluginUpdate()
@@ -226,6 +258,10 @@ class OVRPluginUpdater
 				AssetDatabase.ImportAsset(relPath, ImportAssetOptions.ForceUpdate);
 
 				PluginImporter pi = PluginImporter.GetAtPath(relPath) as PluginImporter;
+				if (pi == null)
+				{
+					continue;
+				}
 
 				pi.SetCompatibleWithAnyPlatform(false);
 
@@ -234,17 +270,29 @@ class OVRPluginUpdater
 					case BuildTarget.Android:
 						pi.SetCompatibleWithPlatform(BuildTarget.Android, true);
 						pi.SetPlatformData(BuildTarget.Android, "CPU", "ARMv7");
+#if UNITY_2017_3_OR_NEWER
+						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
+#else
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+#endif
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
 						pi.SetCompatibleWithEditor(false);
 						break;
+#if UNITY_2017_3_OR_NEWER
+					case BuildTarget.StandaloneOSX:
+#else
 					case BuildTarget.StandaloneOSXUniversal:
+#endif
 						pi.SetCompatibleWithPlatform(BuildTarget.Android, false);
 						pi.SetPlatformData(BuildTarget.Android, "CPU", "ARMv7");
+#if UNITY_2017_3_OR_NEWER
+						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
+#else
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, true);
+#endif
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, true);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, true);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
@@ -258,7 +306,11 @@ class OVRPluginUpdater
 					case BuildTarget.StandaloneWindows:
 						pi.SetCompatibleWithPlatform(BuildTarget.Android, false);
 						pi.SetPlatformData(BuildTarget.Android, "CPU", "ARMv7");
+#if UNITY_2017_3_OR_NEWER
+						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
+#else
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+#endif
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
@@ -272,7 +324,11 @@ class OVRPluginUpdater
 					case BuildTarget.StandaloneWindows64:
 						pi.SetCompatibleWithPlatform(BuildTarget.Android, false);
 						pi.SetPlatformData(BuildTarget.Android, "CPU", "ARMv7");
+#if UNITY_2017_3_OR_NEWER
+						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
+#else
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+#endif
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
 						pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
@@ -296,14 +352,15 @@ class OVRPluginUpdater
 	}
 
 	private static bool restartPending = false;
+	private static readonly string autoUpdateEnabledKey = "Oculus_Utilities_OVRPluginUpdater_AutoUpdate_" + OVRManager.utilitiesVersion;
 	private static bool autoUpdateEnabled
 	{
 		get {
-			return EditorPrefs.GetBool("Oculus_Utilities_OVRPluginUpdater_AutoUpdate", true);
+			return PlayerPrefs.GetInt(autoUpdateEnabledKey, 1) == 1;
 		}
 
 		set {
-			EditorPrefs.SetBool("Oculus_Utilities_OVRPluginUpdater_AutoUpdate", value);
+			PlayerPrefs.SetInt(autoUpdateEnabledKey, value ? 1 : 0);
 		}
 	}
 

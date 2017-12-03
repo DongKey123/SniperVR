@@ -23,19 +23,61 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using System;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.IO;
 
 [InitializeOnLoad]
 class OVRMoonlightLoader
 {
+	private const string prefName = "OVRMoonlightLoader_Enabled";
+	private const string menuItemName = "Tools/Oculus/Use Required Project Settings";
+	static bool setPrefsForUtilities;
+
+	[MenuItem(menuItemName)]
+	static void ToggleUtilities()
+	{
+		setPrefsForUtilities = !setPrefsForUtilities;
+		Menu.SetChecked(menuItemName, setPrefsForUtilities);
+
+		int newValue = (setPrefsForUtilities) ? 1 : 0;
+		PlayerPrefs.SetInt(prefName, newValue);
+		PlayerPrefs.Save();
+
+		Debug.Log("Using required project settings: " + setPrefsForUtilities);
+	}
+
     static OVRMoonlightLoader()
 	{
-		EnforceInputManagerBindings();
-		EditorApplication.update += EnforceBundleId;
-		EditorApplication.update += EnforceVRSupport;
+		EditorApplication.delayCall += OnDelayCall;
+		EditorApplication.update += OnUpdate;
+	}
 
+	static void OnDelayCall()
+	{
+		setPrefsForUtilities = PlayerPrefs.GetInt(prefName, 1) != 0;
+		Menu.SetChecked(menuItemName, setPrefsForUtilities);
+
+		if (!setPrefsForUtilities)
+			return;
+		
+		EnforceAndroidSettings();
+		EnforceInputManagerBindings();
+#if UNITY_ANDROID
+		EnforceOSIG();
+#endif
+	}
+
+	static void OnUpdate()
+	{
+		if (!setPrefsForUtilities)
+			return;
+		
+		EnforceBundleId();
+		EnforceVRSupport();
+		EnforceInstallLocation();
+	}
+
+	static void EnforceAndroidSettings()
+	{
 		if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
 			return;
 
@@ -76,10 +118,28 @@ class OVRMoonlightLoader
 		if (PlayerSettings.virtualRealitySupported)
 			return;
 		
-		var mgrs = GameObject.FindObjectsOfType<OVRManager> ().Where (m => m.isActiveAndEnabled);
-		if (mgrs.Count () != 0) {
-			Debug.Log ("Enabling Unity VR support");
-			PlayerSettings.virtualRealitySupported = true;
+		var mgrs = GameObject.FindObjectsOfType<OVRManager>();
+		for (int i = 0; i < mgrs.Length; ++i)
+		{
+			if (mgrs [i].isActiveAndEnabled)
+			{
+				Debug.Log ("Enabling Unity VR support");
+				PlayerSettings.virtualRealitySupported = true;
+
+#if UNITY_5_6_OR_NEWER
+				bool oculusFound = false;
+#if UNITY_2017_2_OR_NEWER
+				foreach (var device in UnityEngine.XR.XRSettings.supportedDevices)
+#else
+				foreach (var device in UnityEngine.VR.VRSettings.supportedDevices)
+#endif
+					oculusFound |= (device == "Oculus");
+
+				if (!oculusFound)
+					Debug.LogError("Please add Oculus to the list of supported devices to use the Utilities.");
+#endif
+				return;
+			}
 		}
 	}
 
@@ -88,12 +148,27 @@ class OVRMoonlightLoader
 		if (!PlayerSettings.virtualRealitySupported)
 			return;
 
+#if UNITY_5_6_OR_NEWER
+		if (PlayerSettings.applicationIdentifier == "" || PlayerSettings.applicationIdentifier == "com.Company.ProductName")
+		{
+			string defaultBundleId = "com.oculus.UnitySample";
+			Debug.LogWarning("\"" + PlayerSettings.applicationIdentifier + "\" is not a valid bundle identifier. Defaulting to \"" + defaultBundleId + "\".");
+			PlayerSettings.applicationIdentifier = defaultBundleId;
+		}
+#else
 		if (PlayerSettings.bundleIdentifier == "" || PlayerSettings.bundleIdentifier == "com.Company.ProductName")
 		{
 			string defaultBundleId = "com.oculus.UnitySample";
 			Debug.LogWarning("\"" + PlayerSettings.bundleIdentifier + "\" is not a valid bundle identifier. Defaulting to \"" + defaultBundleId + "\".");
 			PlayerSettings.bundleIdentifier = defaultBundleId;
 		}
+#endif
+	}
+
+	private static void EnforceInstallLocation()
+	{
+		if (PlayerSettings.Android.preferredInstallLocation != AndroidPreferredInstallLocation.Auto)
+			PlayerSettings.Android.preferredInstallLocation = AndroidPreferredInstallLocation.Auto;
 	}
 
 	private static void EnforceInputManagerBindings()
@@ -113,6 +188,31 @@ class OVRMoonlightLoader
 		{
 			Debug.LogError("Failed to apply Oculus GearVR input manager bindings.");
 		}
+	}
+
+	private static void EnforceOSIG()
+	{
+		// Don't bug the user in play mode.
+		if (Application.isPlaying)
+			return;
+		
+		// Don't warn if the project may be set up for submission or global signing.
+		if (File.Exists("Assets/Plugins/Android/AndroidManifest.xml"))
+			return;
+		
+		var files = Directory.GetFiles("Assets/Plugins/Android/assets");
+		bool foundPossibleOsig = false;
+		for (int i = 0; i < files.Length; ++i)
+		{
+			if (!files[i].Contains(".txt"))
+			{
+				foundPossibleOsig = true;
+				break;
+			}
+		}
+
+		if (!foundPossibleOsig)
+			Debug.LogWarning("Missing Gear VR OSIG at Assets/Plugins/Android/assets. Please see https://dashboard.oculus.com/tools/osig-generator");
 	}
 
 	private class Axis

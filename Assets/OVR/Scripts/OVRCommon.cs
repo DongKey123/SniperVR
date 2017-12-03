@@ -35,10 +35,38 @@ public static class OVRExtensions
 	public static OVRPose ToTrackingSpacePose(this Transform transform)
 	{
 		OVRPose headPose;
+#if UNITY_2017_2_OR_NEWER
+		headPose.position = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.Head);
+		headPose.orientation = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.Head);
+#else
 		headPose.position = UnityEngine.VR.InputTracking.GetLocalPosition(UnityEngine.VR.VRNode.Head);
 		headPose.orientation = UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.Head);
+#endif
 
 		var ret = headPose * transform.ToHeadSpacePose();
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Converts the given pose from tracking-space to world-space.
+	/// </summary>
+	public static OVRPose ToWorldSpacePose(OVRPose trackingSpacePose)
+	{
+		OVRPose headPose;
+#if UNITY_2017_2_OR_NEWER
+		headPose.position = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.Head);
+		headPose.orientation = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.Head);
+#else
+		headPose.position = UnityEngine.VR.InputTracking.GetLocalPosition(UnityEngine.VR.VRNode.Head);
+		headPose.orientation = UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.Head);
+#endif
+
+		// Transform from tracking-Space to head-Space
+		OVRPose poseInHeadSpace = headPose.Inverse() * trackingSpacePose;
+
+		// Transform from head space to world space
+		OVRPose ret = Camera.main.transform.ToOVRPose() * poseInHeadSpace;
 
 		return ret;
 	}
@@ -132,9 +160,19 @@ public static class OVRExtensions
 		return new Quaternion() { x = q.x, y = q.y, z = q.z, w = q.w };
 	}
 
+	internal static Quaternion FromFlippedZQuatf(this OVRPlugin.Quatf q)
+	{
+		return new Quaternion() { x = -q.x, y = -q.y, z = q.z, w = q.w };
+	}
+
 	internal static OVRPlugin.Quatf ToQuatf(this Quaternion q)
 	{
 		return new OVRPlugin.Quatf() { x = q.x, y = q.y, z = q.z, w = q.w };
+	}
+
+	internal static OVRPlugin.Quatf ToFlippedZQuatf(this Quaternion q)
+	{
+		return new OVRPlugin.Quatf() { x = -q.x, y = -q.y, z = q.z, w = q.w };
 	}
 }
 
