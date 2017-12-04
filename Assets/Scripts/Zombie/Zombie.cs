@@ -24,7 +24,17 @@ public class Zombie : HitObject {
 
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+		if ( _bloodFX == null )
+		{
+			GameObject loadFrefab = Resources.Load( "FX/ImpactBlood" ) as GameObject;
+			GameObject obj = Instantiate( loadFrefab );
+			obj.transform.SetParent( transform );
+			obj.transform.localPosition = Vector3.zero;
+			_bloodFX = obj.GetComponent<ImpactBlood>();
+		}
+		
         m_CurHp = m_MaxHp;
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         anim = this.GetComponent<Animator>();

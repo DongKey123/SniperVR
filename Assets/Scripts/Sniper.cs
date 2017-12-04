@@ -49,6 +49,13 @@ public class Sniper : MonoBehaviour {
 	void Update () {
         this.transform.LookAt(m_LookAtTR);
         Debug.DrawRay(m_Muzzle.position, m_Muzzle.forward*1000f,Color.red);
+
+		RaycastHit hit;
+		if ( Physics.Raycast( m_Muzzle.position, m_Muzzle.forward, out hit ) )
+		{
+			Debug.Log( hit.transform.name );
+		}
+
 	}
 
     void Shoot()
