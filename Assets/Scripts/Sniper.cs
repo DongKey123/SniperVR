@@ -28,6 +28,8 @@ public class Sniper : MonoBehaviour {
 	[SerializeField]
 	private ParticleSystem _nuzzleParticle;
 
+	private bool active = true;
+
     void OnEnable()
     {
         m_Input.Shoot += this.Shoot;
@@ -37,6 +39,8 @@ public class Sniper : MonoBehaviour {
 
     void OnDisable()
     {
+		active = false;
+		StopAllCoroutines();
 		CancelInvoke();
     }
 
@@ -49,17 +53,13 @@ public class Sniper : MonoBehaviour {
 	void Update () {
         this.transform.LookAt(m_LookAtTR);
         Debug.DrawRay(m_Muzzle.position, m_Muzzle.forward*1000f,Color.red);
-
-		RaycastHit hit;
-		if ( Physics.Raycast( m_Muzzle.position, m_Muzzle.forward, out hit ) )
-		{
-			Debug.Log( hit.transform.name );
-		}
-
 	}
 
     void Shoot()
     {
+		if ( !active )
+			return;
+
         if (IsAtkDelaying)
             return;
 
@@ -83,7 +83,7 @@ public class Sniper : MonoBehaviour {
 		_nuzzleParticle.Play();
 
 		RaycastHit hit;
-        StartCoroutine(ReBound());
+		StartCoroutine(ReBound());
         if (Physics.Raycast(m_Muzzle.position, m_Muzzle.forward,out hit))
         {
             Debug.Log(hit.transform.name);
