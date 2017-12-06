@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: ab3ed17c4d7973d4ca6a00d0816be2bb
+timeCreated: 1512576263
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Eordeoghlakat
+  fontNames:
+  - Eordeoghlakat
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
