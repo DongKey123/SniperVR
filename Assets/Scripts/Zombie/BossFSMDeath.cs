@@ -20,7 +20,8 @@ public class BossFSMDeath : Dongkey.FSMState<Boss>
 
     public override void EnterState(Boss owner)
     {
-
+        owner.anim.Play("Death");
+        GameObject.Destroy(owner.gameObject, 2f);
     }
 
     public override void UpdateState(Boss owner)

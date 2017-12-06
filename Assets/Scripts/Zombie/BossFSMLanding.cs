@@ -32,6 +32,7 @@ public class BossFSMLanding : Dongkey.FSMState<Boss>
         {
             owner.anim.Play("Landing");
             time += Time.deltaTime;
+            GameObject.Destroy(owner.GetComponent<Rigidbody>());
         }
 
         if(time > 1f)

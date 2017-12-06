@@ -18,6 +18,9 @@ public class Boss : MonoBehaviour {
     [SerializeField]
     private ImpactBlood _bloodFX;
 
+    public GameObject m_SummonPrefab;
+    public Transform[] m_SummonTR;
+
     int m_CurHp;
     public int m_MaxHP = 5;
 
@@ -51,9 +54,19 @@ public class Boss : MonoBehaviour {
 
     public void Hit()
     {
+        if (m_CurHp <= 0)
+            return;
+
         m_CurHp--;
 
-        ChangeState(BossFSMHit.Instance);
+        if(m_CurHp <= 0)
+        {
+            ChangeState(BossFSMDeath.Instance);
+        }
+        else
+        {
+            ChangeState(BossFSMHit.Instance);
+        }
     }
 
     public void ChangeState(FSMState<Boss> state)
