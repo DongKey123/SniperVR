@@ -18,14 +18,21 @@ public class BossFSMHit : Dongkey.FSMState<Boss>
     static BossFSMHit() { }
     private BossFSMHit() { }
 
+    float time = 0;
+
     public override void EnterState(Boss owner)
     {
-
+        time = 0;
+        owner.anim.Play("GetHit");
     }
 
     public override void UpdateState(Boss owner)
     {
-
+        time += Time.deltaTime;
+        if (time > 2f)
+        {
+            owner.ChangeState(BossFSMIdle.Instance);
+        }
     }
 
     public override void ExitState(Boss owner)

@@ -90,6 +90,7 @@ public class Sniper : MonoBehaviour {
             if(hit.transform.tag == "HitObj")
             {
                 HitObject hitobj = hit.transform.GetComponent<HitObject>();
+                Debug.Log(hitobj);
                 hitobj.Hit( hit.point, Vector3.Distance(hitobj.transform.position,this.transform.position));
             }
         }

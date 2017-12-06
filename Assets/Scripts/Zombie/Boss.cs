@@ -19,7 +19,7 @@ public class Boss : MonoBehaviour {
     private ImpactBlood _bloodFX;
 
     int m_CurHp;
-    public int m_MaxHP = 2;
+    public int m_MaxHP = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +36,7 @@ public class Boss : MonoBehaviour {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         anim = this.GetComponent<Animator>();
         m_stateMachine = new FSMStateMachine<Boss>();
-        m_stateMachine.InitialSetting(this, BossFSMIdle.Instance);
+        m_stateMachine.InitialSetting(this, BossFSMLanding.Instance);
     }
 	
 	// Update is called once per frame
@@ -51,6 +51,13 @@ public class Boss : MonoBehaviour {
 
     public void Hit()
     {
+        m_CurHp--;
 
+        ChangeState(BossFSMHit.Instance);
+    }
+
+    public void ChangeState(FSMState<Boss> state)
+    {
+        m_stateMachine.ChangeState(state);
     }
 }
