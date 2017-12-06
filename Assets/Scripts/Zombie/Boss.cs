@@ -21,6 +21,8 @@ public class Boss : MonoBehaviour {
     public GameObject m_SummonPrefab;
     public Transform[] m_SummonTR;
 
+    public List<Zombie> m_Summons;
+
     int m_CurHp;
     public int m_MaxHP = 5;
 
@@ -72,5 +74,13 @@ public class Boss : MonoBehaviour {
     public void ChangeState(FSMState<Boss> state)
     {
         m_stateMachine.ChangeState(state);
+    }
+
+    public void AllKillSummons()
+    {
+        foreach(Zombie monster in m_Summons)
+        {
+            monster.ChangeState(ZombieFSMDeath.Instance);
+        }
     }
 }

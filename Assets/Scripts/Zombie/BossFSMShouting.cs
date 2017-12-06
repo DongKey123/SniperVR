@@ -47,5 +47,7 @@ public class BossFSMShouting : Dongkey.FSMState<Boss>
         GameObject obj2 = GameObject.Instantiate(owner.m_SummonPrefab, owner.m_SummonTR[1]);
         obj1.GetComponent<Zombie>().m_Target = owner.m_target;
         obj2.GetComponent<Zombie>().m_Target = owner.m_target;
+        owner.m_Summons.Add(obj1.GetComponent<Zombie>());
+        owner.m_Summons.Add(obj2.GetComponent<Zombie>());
     }
 }
