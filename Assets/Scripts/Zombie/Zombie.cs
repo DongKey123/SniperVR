@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Dongkey;
+using System;
 
-public class Zombie : HitObject {
+public class Zombie : HitObject
+{
+	public event Action OnDown;
     [HideInInspector]
     public Animator anim;
     [HideInInspector]
@@ -70,6 +73,8 @@ public class Zombie : HitObject {
 
 		if (m_CurHp <= 0)
         {
+			if ( OnDown != null )
+				OnDown();
             m_stateMachine.ChangeState(ZombieFSMDeath.Instance);
         }
         else
