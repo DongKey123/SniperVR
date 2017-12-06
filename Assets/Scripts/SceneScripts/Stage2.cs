@@ -45,11 +45,24 @@ public class Stage2 : MonoBehaviour
 
 		while ( _killMonsterAmount < _maxMonsterAmount )
 			yield return new WaitForEndOfFrame();
-		
-		//nextGame
+
+		_GUIText.PageDown += CheckBossStart;
 		_GUIText._Lock = false;
 		_GUIText.gameObject.SetActive( true );
+
+		while ( !_isEnterBossRound )
+			yield return new WaitForEndOfFrame();
+
+		//boss
+		_Boss.gameObject.SetActive( true );
+		_Boss.OnDead += BossClear;
+		//
+		while ( !_isClearBoss )
+			yield return new WaitForEndOfFrame();
+
+		_GUIText._Lock = false;
 		_GUIText.TextDone += GoNextLevel;
+		_GUIText.gameObject.SetActive( true );
 	}
 	
 	void AddKillMonsterAmount()
@@ -68,11 +81,28 @@ public class Stage2 : MonoBehaviour
 		}
 	}
 
-	void GoNextLevel()
+	void CheckBossStart()
 	{
-		
+		if ( _GUIText.GetCurrentScriptIndex() >= 7 )
+		{
+			_GUIText.PageDown -= CheckBossStart;
+			_GUIText._Lock = true;
+			_GUIText.gameObject.SetActive( false );
+			_isEnterBossRound = true;
+		}
 	}
 
+	void BossClear()
+	{
+		//보스의 개 초기화. 
+		_Boss.AllKillSummons();
+		_isClearBoss = true;
+	}
+
+	void GoNextLevel()
+	{
+		Debug.Log("good");
+	}
 
 	public Dongkey.CameraFade _GUIFrontScreen;
 	public Paradox.ScreenOverayText _GUIText;
@@ -82,7 +112,13 @@ public class Stage2 : MonoBehaviour
 	[SerializeField]
 	private Transform _MonsterHaveTransform;
 
+	[SerializeField]
+	private Boss _Boss;
+
 	bool _isStartShotRiffle = false;
+	bool _isEnterBossRound = false;
+
+	bool _isClearBoss = false;
 	
 	int _maxMonsterAmount;
 	int _killMonsterAmount;

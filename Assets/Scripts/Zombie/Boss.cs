@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Dongkey;
 using UnityEngine.AI;
+using System;
 
-public class Boss : MonoBehaviour {
+public class Boss : MonoBehaviour
+{
+	public event Action OnDead;
 
     [HideInInspector]
     public Animator anim;
@@ -80,7 +83,8 @@ public class Boss : MonoBehaviour {
     {
         foreach(Zombie monster in m_Summons)
         {
-            monster.ChangeState(ZombieFSMDeath.Instance);
+			if ( monster != null )
+				monster.ChangeState(ZombieFSMDeath.Instance);
         }
     }
 }
