@@ -24,7 +24,7 @@ public class StartSVD : VRInteraction
 	public override void ControllerIn( OVRInput.Controller _inputController )
 	{
 		if ( handCount <= 0 )
-			gameObject.SetActive( true );
+			_showUI.SetActive( true );
 		handCount++;
 	}
 
@@ -32,7 +32,7 @@ public class StartSVD : VRInteraction
 	{
 		handCount--;
 		if ( handCount <= 0 )
-			gameObject.SetActive( false );
+			_showUI.SetActive( false );
 	}
 
 	bool activeSceneChange;
