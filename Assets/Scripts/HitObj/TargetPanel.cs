@@ -33,9 +33,9 @@ public class TargetPanel : HitObject     {
 		return isChooseRandomTarget;
 	}
 
-	public void WakeUp()
+	public void WakeUp(bool random = false)
 	{
-		isChooseRandomTarget = true;
+		isChooseRandomTarget = random;
 		anim.Play( "WakeUp" );
 		Invoke( "ColliderOn", 0.25f );
 	}
@@ -60,9 +60,19 @@ public class TargetPanel : HitObject     {
     {
 		hitEffect.transform.position = raycastHitPoint;
 		hitEffect.Play();
-
+		
 		this.GetComponent<Collider>().enabled = false;
         m_HitAudio.Play();
         anim.Play("Hit");
     }
+
+	public void FlipBackTarget()
+	{
+		if ( GetComponent<Collider>().enabled == false )
+			return;
+
+		this.GetComponent<Collider>().enabled = false;
+		m_HitAudio.Play();
+		anim.Play( "Hit" );
+	}
 }

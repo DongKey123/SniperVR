@@ -16,12 +16,24 @@ public class Stage1 : MonoBehaviour {
 		_maxTargetAmount = _TargetObjParentTransform.childCount;
 		_shotTargetAmount = 0;
 
+		Transform child = null;
 		for ( int i = 0; i < _maxTargetAmount; i++ )
 		{
-			if ( _TargetObjParentTransform.GetChild( i ) != null )
+			child = _TargetObjParentTransform.GetChild( i );
+			if ( child != null )
 			{
-				if ( _TargetObjParentTransform.GetChild( i ).GetComponent<TargetPanel>() != null )
-					_TargetObjParentTransform.GetChild( i ).GetComponent<TargetPanel>().Over += AddShotTargetAmount;
+				if ( child.GetComponent<TargetPanel>() != null )
+				{
+					if ( child.name.Contains("9") || child.name.Contains( "10" ) || child.name.Contains( "11" ) )
+					{
+						_TargetListFront.Add( child.gameObject );
+					}
+					else if( child.name.Contains( "6" ) || child.name.Contains( "7" ) || child.name.Contains( "8" ) )
+					{
+						_TargetListFar.Add( child.gameObject );
+					}
+					child.GetComponent<TargetPanel>().Over += AddShotTargetAmount;
+				}
 			}
 		}
 
@@ -53,6 +65,44 @@ public class Stage1 : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 
+		_SniperRifle.SetActive( true );
+		// 사격
+		for ( int i = 0; i < _TargetListFront.Count; i++ )
+		{
+			_TargetListFront[i].GetComponent<TargetPanel>().WakeUp();
+		}
+
+		while ( _shotTargetAmount < 1 )
+			yield return new WaitForEndOfFrame();
+
+		_shotTargetAmount = 0;
+
+		for ( int i = 0; i < _TargetListFront.Count; i++ )
+		{
+			_TargetListFront[i].GetComponent<TargetPanel>().FlipBackTarget();
+		}
+
+		// 조준경 사용 사격
+		_GUIText.NextTextFromAcessText( true );
+
+		for ( int i = 0; i < _TargetListFar.Count; i++ )
+		{
+			_TargetListFar[i].GetComponent<TargetPanel>().WakeUp();
+		}
+
+		while ( _shotTargetAmount < 1 )
+			yield return new WaitForEndOfFrame();
+
+		_shotTargetAmount = 0;
+
+		for ( int i = 0; i < _TargetListFar.Count; i++ )
+		{
+			_TargetListFar[i].GetComponent<TargetPanel>().FlipBackTarget();
+		}
+
+		//랜덤 n 사격
+		_GUIText.NextTextFromAcessText( true );
+		
 		int randomIndex = -1;
 		int currentAmount = _RandomAwakeAmount;
 		TargetPanel value = null;
@@ -68,17 +118,18 @@ public class Stage1 : MonoBehaviour {
 			if ( value.IsChooseRandomWake() )
 				continue;
 
-			value.WakeUp();
+			value.WakeUp(true);
 			currentAmount--;
 		}
-
-		_SniperRifle.SetActive( true );
-
+		
 		while ( _shotTargetAmount < _maxTargetAmount )
 		{
 			yield return new WaitForEndOfFrame();
 		}
 
+		_GUIText.NextTextFromAcessText( true );
+
+		//nextGame
 		_GUIText._Lock = false;
 		_GUIText.gameObject.SetActive( true );
 		_GUIText.TextDone += FrontScreenFadeOut;
@@ -96,10 +147,9 @@ public class Stage1 : MonoBehaviour {
 
 	void CheckGameStart()
 	{
-		if ( _GUIText.GetCurrentScriptIndex() >= 4 )
+		if ( _GUIText.GetCurrentScriptIndex() >= 3 )
 		{
 			_GUIText.PageDown -= CheckGameStart;
-			_GUIText.gameObject.SetActive( false );
 			_GUIText._Lock = true;
 			_isStartShotRiffle = true;
 		}
@@ -132,5 +182,8 @@ public class Stage1 : MonoBehaviour {
 
 	int								_maxTargetAmount;
 	int								_shotTargetAmount;
+
+	List<GameObject>				_TargetListFront = new List<GameObject>();
+	List<GameObject>				_TargetListFar = new List<GameObject>();
 
 }
