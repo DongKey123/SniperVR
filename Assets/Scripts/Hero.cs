@@ -20,9 +20,18 @@ public class Hero : MonoBehaviour {
 		
 	}
 
+    
+
 	public void Death()
 	{
-		_sniperRifle.SetActive( false );
-		_bloodRenderer.Play();
+        Invoke("DeathDelay", 0.3f);
+		//_sniperRifle.SetActive( false );
+		//_bloodRenderer.Play();
 	}
+
+    void DeathDelay()
+    {
+        _sniperRifle.SetActive(false);
+        _bloodRenderer.Play();
+    }
 }

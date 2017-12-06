@@ -56,10 +56,17 @@ public class Zombie : HitObject {
     public override void Hit(Vector3 hitPoint, float distance)
     {
         base.Hit(hitPoint, distance);
+
+        if (m_CurHp <= 0)
+            return;
+
         m_CurHp--;
 
 		if(_bloodFX != null)
 			_bloodFX.Play();
+
+        
+
 
 		if (m_CurHp <= 0)
         {

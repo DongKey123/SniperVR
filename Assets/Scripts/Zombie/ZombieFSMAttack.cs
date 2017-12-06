@@ -20,7 +20,7 @@ public class ZombieFSMAttack : Dongkey.FSMState<Zombie> {
     public override void EnterState(Zombie owner)
     {
 		owner.m_navMeshAgent.isStopped = true;
-        owner.anim.Play("Atack(1)");
+        owner.anim.Play("Attack(1)");
 		owner.KillHero();
     }
 
@@ -33,4 +33,5 @@ public class ZombieFSMAttack : Dongkey.FSMState<Zombie> {
     {
 
     }
+
 }
