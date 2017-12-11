@@ -129,7 +129,9 @@ public class Sniper : MonoBehaviour
     void ChangeBullet()
     {
         m_curBullets = m_maxBullets;
-    }
+		_bulletAmountText.text = m_curBullets.ToString();
+		_bulletAmountText.color = GetBulletColor();
+	}
 
     IEnumerator ReBound()
     {
@@ -165,12 +167,13 @@ public class Sniper : MonoBehaviour
 	Color GetBulletColor()
 	{
 		Color ret = Color.white;
-
-		if ( m_curBullets / m_maxBullets <= 0.3f )
+		float ratio = m_curBullets / (float)m_maxBullets;
+		Debug.Log( ratio );
+		if ( ratio <= 0.3f )
 		{
 			ret = Color.red;
 		}
-		else if ( m_curBullets / m_maxBullets <= 0.6f )
+		else if ( ratio <= 0.6f )
 		{
 			ret = Color.yellow;
 		}
