@@ -19,12 +19,12 @@ namespace Paradox
 		{
 			if ( _contollerInput == ControllerType.LEFT )
 			{
-				if ( OVRInput.GetDown( OVRInput.Button.PrimaryIndexTrigger ))
+				if ( OVRInput.GetDown( OVRInput.Button.PrimaryIndexTrigger , OVRInput.Controller.LTouch))
 				{
 					m_PressKey = true;
 					m_KeyEventOn = true;
 				}
-				if ( OVRInput.GetUp( OVRInput.Button.PrimaryIndexTrigger ) )
+				if ( OVRInput.GetUp( OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.LTouch ) )
 				{
 					m_PressKey = false;
 					m_KeyEventOn = true;
@@ -32,12 +32,12 @@ namespace Paradox
 			}
 			else
 			{
-				if ( OVRInput.GetDown( OVRInput.Button.SecondaryIndexTrigger ) )
+				if ( OVRInput.GetDown( OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch ) )
 				{
 					m_PressKey = true;
 					m_KeyEventOn = true;
 				}
-				if ( OVRInput.GetUp( OVRInput.Button.SecondaryIndexTrigger ) )
+				if ( OVRInput.GetUp( OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch ) )
 				{
 					m_PressKey = false;
 					m_KeyEventOn = true;

@@ -112,8 +112,6 @@ public class Zombie : HitObject
 		{
 			StartCoroutine( "GlowlTrace" );
 		}
-
-
 	}
 
 	public void KillHero()
