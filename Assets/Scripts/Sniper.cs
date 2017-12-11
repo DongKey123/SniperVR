@@ -37,6 +37,7 @@ public class Sniper : MonoBehaviour
     void OnEnable()
     {
         m_Input.Shoot += this.Shoot;
+        m_Input.Reload += this.Reload;
         m_Input.ZoomIn += this.ZoomIn;
         m_Input.ZoomOut += this.ZoomOut;
     }

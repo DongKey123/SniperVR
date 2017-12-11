@@ -6,6 +6,7 @@ using System;
 public class OculusInputManger : MonoBehaviour {
 
     public Action Shoot;
+    public Action Reload;
     public Action ZoomIn;
     public Action ZoomOut;
 
@@ -26,12 +27,20 @@ public class OculusInputManger : MonoBehaviour {
         //    //this.GetComponent<OculusHapticsController>().Vibrate(VibrationForce.Hard,OVRTouch.Left);
         //    //this.GetComponent<OculusHapticsController>().Vibrate(VibrationForce.Hard, OVRTouch.Right);
         //}
-            //Shooting
+        //Shooting
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch ) )
         {
             if(Shoot != null)
             {
                 Shoot();
+            }
+        }
+        //Reload
+        else if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger, OVRInput.Controller.RTouch))
+        {
+            if(Reload != null)
+            {
+                Reload();
             }
         }
         //Zoom Change
@@ -50,6 +59,7 @@ public class OculusInputManger : MonoBehaviour {
                 ZoomOut();
             }
         }
+        
 
 
     }
