@@ -123,12 +123,14 @@ public class Sniper : MonoBehaviour
 
     void Reload()
     {
+        IsAtkDelaying = false;
         m_ReloadAudio.Play();
         Invoke("ChangeBullet", m_ReloadTime);
     }
 
     void ChangeBullet()
     {
+        IsAtkDelaying = true;
         m_curBullets = m_maxBullets;
 		_bulletAmountText.text = m_curBullets.ToString();
 		_bulletAmountText.color = GetBulletColor();
