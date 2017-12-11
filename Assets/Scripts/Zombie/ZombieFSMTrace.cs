@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Dongkey;
 
-public class ZombieFSMTrace : FSMState<Zombie> {
-
-
+public class ZombieFSMTrace : FSMState<Zombie>
+{
     static readonly ZombieFSMTrace instance = new ZombieFSMTrace();
 
     public static ZombieFSMTrace Instance
@@ -23,7 +22,8 @@ public class ZombieFSMTrace : FSMState<Zombie> {
     {
 		owner.m_navMeshAgent.isStopped = false;
         owner.anim.Play("Walk");
-    }
+		owner.EnterStateMacineChanged( this );
+	}
 
     public override void UpdateState(Zombie owner)
     {

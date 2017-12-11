@@ -24,7 +24,8 @@ public class BossFSMShouting : Dongkey.FSMState<Boss>
     {
         time = 0;
         owner.anim.SetBool("Shoutting",true);
-    }
+		owner.EnterStateMacineChanged( this );
+	}
 
     public override void UpdateState(Boss owner)
     {

@@ -21,7 +21,8 @@ public class ZombieFSMAttack : Dongkey.FSMState<Zombie> {
     {
 		owner.m_navMeshAgent.isStopped = true;
         owner.anim.Play("Attack(1)");
-		owner.KillHero();
+
+		owner.EnterStateMacineChanged( this );
     }
 
     public override void UpdateState(Zombie owner)

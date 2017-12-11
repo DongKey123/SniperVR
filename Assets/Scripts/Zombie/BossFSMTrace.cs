@@ -20,8 +20,8 @@ public class BossFSMTrace : Dongkey.FSMState<Boss>
 
     public override void EnterState(Boss owner)
     {
-
-    }
+		owner.EnterStateMacineChanged( this );
+	}
 
     public override void UpdateState(Boss owner)
     {

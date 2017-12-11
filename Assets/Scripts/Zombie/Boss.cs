@@ -26,7 +26,10 @@ public class Boss : MonoBehaviour
 
     public List<Zombie> m_Summons;
 
-    int m_CurHp;
+	[SerializeField]
+	private SoundAppear _soundAppear;
+
+	int m_CurHp;
     public int m_MaxHP = 5;
 
 	// Use this for initialization
@@ -56,8 +59,8 @@ public class Boss : MonoBehaviour
     {
         m_stateMachine = null;
     }
-
-    public void Hit()
+	
+	public void Hit()
     {
         if (m_CurHp <= 0)
             return;
@@ -79,7 +82,28 @@ public class Boss : MonoBehaviour
         m_stateMachine.ChangeState(state);
     }
 
-    public void AllKillSummons()
+	public void EnterStateMacineChanged( FSMState<Boss> eventState )
+	{
+		if ( eventState == BossFSMShouting.Instance )
+		{
+			_soundAppear.Play( SoundAppear.SoundType.ATTACK );
+		}
+		else if ( eventState == BossFSMLanding.Instance )
+		{
+			_soundAppear.Play( SoundAppear.SoundType.IDLE );
+		}
+		else if ( eventState == BossFSMDeath.Instance )
+		{
+			_soundAppear.Play( SoundAppear .SoundType.DEATH);
+			Destroy( gameObject, 2f );
+		}
+		else if ( eventState == BossFSMHit.Instance )
+		{
+			_soundAppear.Play( SoundAppear.SoundType.HIT );
+		}
+	}
+
+	public void AllKillSummons()
     {
         foreach(Zombie monster in m_Summons)
         {

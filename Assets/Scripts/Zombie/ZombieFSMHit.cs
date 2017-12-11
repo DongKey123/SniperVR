@@ -26,6 +26,7 @@ public class ZombieFSMHit : Dongkey.FSMState<Zombie>
 		owner.m_navMeshAgent.isStopped = true;
         time = 0;
         owner.anim.Play("GetHit");
+		owner.EnterStateMacineChanged( this );
     }
 
     public override void UpdateState(Zombie owner)

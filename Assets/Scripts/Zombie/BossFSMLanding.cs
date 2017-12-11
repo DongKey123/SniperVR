@@ -24,7 +24,8 @@ public class BossFSMLanding : Dongkey.FSMState<Boss>
     public override void EnterState(Boss owner)
     {
         time = 0f;
-    }
+		owner.EnterStateMacineChanged( this );
+	}
 
     public override void UpdateState(Boss owner)
     {

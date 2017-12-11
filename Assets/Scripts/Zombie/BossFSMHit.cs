@@ -24,7 +24,8 @@ public class BossFSMHit : Dongkey.FSMState<Boss>
     {
         time = 0;
         owner.anim.Play("GetHit");
-    }
+		owner.EnterStateMacineChanged( this );
+	}
 
     public override void UpdateState(Boss owner)
     {

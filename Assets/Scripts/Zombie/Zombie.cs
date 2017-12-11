@@ -19,7 +19,14 @@ public class Zombie : HitObject
 
 	[SerializeField]
 	private ImpactBlood _bloodFX;
-	
+	[SerializeField]
+	private SoundAppear _soundAppear;
+	[SerializeField]
+	private float _minGlowlTime = 3f;
+	[SerializeField]
+	private float _maxGlowlTime = 5f;
+
+
     int m_CurHp;
     public int m_MaxHp = 1;
 
@@ -68,14 +75,11 @@ public class Zombie : HitObject
 		if(_bloodFX != null)
 			_bloodFX.Play();
 
-        
-
-
 		if (m_CurHp <= 0)
         {
 			if ( OnDown != null )
 				OnDown();
-            m_stateMachine.ChangeState(ZombieFSMDeath.Instance);
+			m_stateMachine.ChangeState(ZombieFSMDeath.Instance);
         }
         else
         {
@@ -88,8 +92,38 @@ public class Zombie : HitObject
         m_stateMachine.ChangeState(state);
     }
 
+	public void EnterStateMacineChanged( FSMState<Zombie> eventState )
+	{
+		StopCoroutine( "GlowlTrace" );
+		if ( eventState == ZombieFSMAttack.Instance )
+		{
+			_soundAppear.Play(SoundAppear.SoundType.ATTACK);
+			KillHero();
+		}
+		else if ( eventState == ZombieFSMDeath.Instance)
+		{
+			_soundAppear.Play( SoundAppear.SoundType.DEATH );
+			Destroy( gameObject, 2f );
+		}
+		else if ( eventState == ZombieFSMTrace.Instance )
+		{
+			StartCoroutine( "GlowlTrace" );
+		}
+
+
+	}
+
 	public void KillHero()
 	{
 		m_Target.GetComponent<Hero>().Death();
+	}
+
+	IEnumerator GlowlTrace()
+	{
+		while ( true )
+		{
+			yield return new WaitForSeconds( UnityEngine.Random.Range(_minGlowlTime, _maxGlowlTime));
+			_soundAppear.Play(SoundAppear.SoundType.IDLE);
+		}
 	}
 }

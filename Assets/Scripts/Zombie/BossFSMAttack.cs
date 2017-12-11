@@ -20,7 +20,7 @@ public class BossFSMAttack : Dongkey.FSMState<Boss>
 
     public override void EnterState(Boss owner)
     {
-
+		owner.EnterStateMacineChanged( this );
     }
 
     public override void UpdateState(Boss owner)

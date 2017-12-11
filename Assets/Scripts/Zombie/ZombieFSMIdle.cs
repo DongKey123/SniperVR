@@ -20,8 +20,8 @@ public class ZombieFSMIdle : FSMState<Zombie> {
 
     public override void EnterState(Zombie owner)
     {
-        
-    }
+		owner.EnterStateMacineChanged( this );
+	}
 
     public override void UpdateState(Zombie owner)
     {
