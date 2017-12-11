@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Sniper : MonoBehaviour {
-
+public class Sniper : MonoBehaviour
+{
     public float m_MinFOV = 0.001f;
     public float m_MaxFOV = 60f;
 
@@ -28,6 +29,9 @@ public class Sniper : MonoBehaviour {
 	[SerializeField]
 	private ParticleSystem _nuzzleParticle;
 
+	[SerializeField]
+	private Text _bulletAmountText;
+
 	private bool active = true;
 
     void OnEnable()
@@ -46,7 +50,7 @@ public class Sniper : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		_bulletAmountText.text = m_curBullets.ToString();
 	}
 	
 	// Update is called once per frame
@@ -74,7 +78,10 @@ public class Sniper : MonoBehaviour {
         Invoke("ChangeAtkDelay", m_AtkDelayTime);
         m_ShootAudio.Play();
         m_curBullets--;
-        if(m_curBullets <= 0)
+		_bulletAmountText.text = m_curBullets.ToString();
+		_bulletAmountText.color = GetBulletColor();
+
+		if (m_curBullets <= 0)
         {
             Invoke("Reload", m_AtkDelayTime);
         }
@@ -155,5 +162,19 @@ public class Sniper : MonoBehaviour {
         }
     }
 
-   
+	Color GetBulletColor()
+	{
+		Color ret = Color.white;
+
+		if ( m_curBullets / m_maxBullets <= 0.3f )
+		{
+			ret = Color.red;
+		}
+		else if ( m_curBullets / m_maxBullets <= 0.6f )
+		{
+			ret = Color.yellow;
+		}
+
+		return ret;
+	}
 }
