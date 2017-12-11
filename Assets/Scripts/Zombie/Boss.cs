@@ -94,6 +94,8 @@ public class Boss : MonoBehaviour
 		}
 		else if ( eventState == BossFSMDeath.Instance )
 		{
+			if ( OnDead != null )
+				OnDead();
 			_soundAppear.Play( SoundAppear .SoundType.DEATH);
 			Destroy( gameObject, 2f );
 		}

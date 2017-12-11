@@ -72,8 +72,11 @@ public class Zombie : HitObject
 
         m_CurHp--;
 
-		if(_bloodFX != null)
+		if ( _bloodFX != null )
+		{
+			_bloodFX.transform.position = hitPoint;
 			_bloodFX.Play();
+		}
 
 		if (m_CurHp <= 0)
         {

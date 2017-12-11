@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Stage2 : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class Stage2 : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 
 		_GUIText._Lock = false;
-		_GUIText.TextDone += GoNextLevel;
+		_GUIText.TextDone += FrontScreenFadeOut;
 		_GUIText.gameObject.SetActive( true );
 	}
 	
@@ -99,9 +100,14 @@ public class Stage2 : MonoBehaviour
 		_isClearBoss = true;
 	}
 
+	void FrontScreenFadeOut()
+	{
+		_GUIFrontScreen.OnFadeComplete += GoNextLevel;
+		_GUIFrontScreen.FadeOut();
+	}
 	void GoNextLevel()
 	{
-		Debug.Log("good");
+		SceneManager.LoadScene( "Ending" );
 	}
 
 	public Dongkey.CameraFade _GUIFrontScreen;
