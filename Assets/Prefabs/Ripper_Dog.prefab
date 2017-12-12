@@ -1671,6 +1671,8 @@ MonoBehaviour:
   _soundAppear: {fileID: 114629822470330184}
   _minGlowlTime: 1
   _maxGlowlTime: 2
+  _leftFoot: {fileID: 4848352812670192}
+  _rightFoot: {fileID: 4064670367047884}
   m_MaxHp: 1
 --- !u!114 &114629822470330184
 MonoBehaviour:
@@ -1686,6 +1688,7 @@ MonoBehaviour:
   _IdleSound: {fileID: 8300000, guid: 73e8ac7cf71450a48ab9fdf7c939a576, type: 3}
   _AtkSound: {fileID: 8300000, guid: 56087ceb2fee5ca43a90af31fdb11250, type: 3}
   _DeathSound: {fileID: 8300000, guid: 803ab42c49bf5aa45adbeb11346154de, type: 3}
+  _HitSound: {fileID: 0}
   _appearPoint: {fileID: 82498914223215234}
 --- !u!136 &136331315099144428
 CapsuleCollider:

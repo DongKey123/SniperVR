@@ -39,8 +39,8 @@ public class BossFSMShouting : Dongkey.FSMState<Boss>
 
     public override void ExitState(Boss owner)
     {
-
-    }
+		owner.EnterStateMacineEnd( this );
+	}
 
     void SummonMonster(Boss owner)
     {

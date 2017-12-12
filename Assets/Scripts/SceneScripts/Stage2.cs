@@ -8,11 +8,15 @@ public class Stage2 : MonoBehaviour
 	void OnEnable()
 	{
 		FootStepManager.Instance.Initialized();
+		ImpactParticleManager.Instance.Initialized();
 	}
 
 	void OnDisable()
 	{
-		FootStepManager.Instance.Clear();
+		if( FootStepManager.Instance != null)
+			FootStepManager.Instance.Clear();
+		if( ImpactParticleManager.Instance != null)
+			ImpactParticleManager.Instance.Clear();
 	}
 
 	// Use this for initialization

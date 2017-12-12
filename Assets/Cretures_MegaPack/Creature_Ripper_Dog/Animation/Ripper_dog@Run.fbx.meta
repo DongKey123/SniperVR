@@ -166,12 +166,12 @@ ModelImporter:
       curves: []
       events:
       - time: 0.3902439
-        functionName: FootStep
+        functionName: FootStepDog
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 8554a210e45a8ea48ab655a85d1c39fc,
           type: 3}
         floatParameter: 0
-        intParameter: 3
+        intParameter: 0
         messageOptions: 0
       transformMask: []
       maskType: 3

@@ -20,7 +20,8 @@ public class FootStepManager : Singleton<FootStepManager>
 
 	public void Clear()
 	{
-		_ParticlePool.Clear();
+		if(_ParticlePool != null)
+			_ParticlePool.Clear();
 	}
 
 	public void PlayParticle( Vector3 appearPosition, int footType )

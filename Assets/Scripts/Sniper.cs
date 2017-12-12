@@ -95,12 +95,17 @@ public class Sniper : MonoBehaviour
         if (Physics.Raycast(m_Muzzle.position, m_Muzzle.forward,out hit))
         {
             Debug.Log(hit.transform.name);
-            if(hit.transform.tag == "HitObj")
-            {
-                HitObject hitobj = hit.transform.GetComponent<HitObject>();
-                Debug.Log(hitobj);
-                hitobj.Hit( hit.point, Vector3.Distance(hitobj.transform.position,this.transform.position));
-            }
+			if ( hit.transform.tag == "HitObj" )
+			{
+				HitObject hitobj = hit.transform.GetComponent<HitObject>();
+				Debug.Log( hitobj );
+				hitobj.Hit( hit.point, Vector3.Distance( hitobj.transform.position, this.transform.position ) );
+			}
+			else
+			{
+				//지형지물 이펙트 처리
+				ImpactParticleManager.Instance.PlayParticle( hit.point, m_Muzzle.forward * -1, hit.collider.gameObject.layer );
+			}
         }
     }
 
@@ -171,7 +176,6 @@ public class Sniper : MonoBehaviour
 	{
 		Color ret = Color.white;
 		float ratio = m_curBullets / (float)m_maxBullets;
-		Debug.Log( ratio );
 		if ( ratio <= 0.3f )
 		{
 			ret = Color.red;

@@ -150,4 +150,10 @@ public class Zombie : HitObject
 
 		FootStepManager.Instance.PlayParticle( footPos, footType );
 	}
+
+	void FootStepDog()
+	{
+		FootStepManager.Instance.PlayParticle( _leftFoot.transform.position, 0 );
+		FootStepManager.Instance.PlayParticle( _rightFoot.transform.position, 1 );
+	}
 }

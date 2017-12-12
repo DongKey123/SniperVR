@@ -28,6 +28,8 @@ public class Boss : MonoBehaviour
 
 	[SerializeField]
 	private SoundAppear _soundAppear;
+	[SerializeField]
+	private BossImpactFX _impactFX;
 
 	int m_CurHp;
     public int m_MaxHP = 5;
@@ -91,6 +93,7 @@ public class Boss : MonoBehaviour
 		else if ( eventState == BossFSMLanding.Instance )
 		{
 			_soundAppear.Play( SoundAppear.SoundType.IDLE );
+			Invoke( "PlayImpactPX", 1.5F );
 		}
 		else if ( eventState == BossFSMDeath.Instance )
 		{
@@ -103,6 +106,21 @@ public class Boss : MonoBehaviour
 		{
 			_soundAppear.Play( SoundAppear.SoundType.HIT );
 		}
+	}
+
+	public void EnterStateMacineEnd( FSMState<Boss> eventState )
+	{
+		/*
+		if ( eventState == BossFSMLanding.Instance )
+		{
+			_impactFX.Play();
+		}
+		*/
+	}
+
+	void PlayImpactPX()
+	{
+		_impactFX.Play();
 	}
 
 	public void AllKillSummons()

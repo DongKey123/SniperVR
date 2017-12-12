@@ -37,6 +37,6 @@ public class BossFSMIdle : Dongkey.FSMState<Boss> {
 
     public override void ExitState(Boss owner)
     {
-
-    }
+		owner.EnterStateMacineEnd( this );
+	}
 }
