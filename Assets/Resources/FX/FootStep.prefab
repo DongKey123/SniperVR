@@ -162,61 +162,61 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.020808365
+      time: 0.010031845
       value: 0.9916649
       inSlope: -500.20065
       outSlope: -500.20065
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.022808366
+      time: 0.012031846
       value: 0.4916649
       inSlope: -125.05016
       outSlope: -125.05016
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.026808366
+      time: 0.016031846
       value: 0.24166489
       inSlope: -31.26254
       outSlope: -31.26254
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.034808367
+      time: 0.024031848
       value: 0.11666489
       inSlope: -7.815635
       outSlope: -7.815635
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.050808366
+      time: 0.040031847
       value: 0.054164886
       inSlope: -1.9539088
       outSlope: -1.9539088
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.08280837
+      time: 0.07203185
       value: 0.022914886
       inSlope: -0.4884772
       outSlope: -0.4884772
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.14680837
+      time: 0.13603185
       value: 0.0072898865
       inSlope: -0.1221193
       outSlope: -0.1221193
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.27480838
+      time: 0.26403186
       value: 0
       inSlope: -0.030529825
       outSlope: -0.030529825
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.5308084
+      time: 0.52003187
       value: 0
       inSlope: -0.0076324563
       outSlope: -0.0076324563
       tangentMode: 0
     - serializedVersion: 2
-      time: 1
+      time: 0.9892235
       value: 0
       inSlope: -0.002000801
       outSlope: -0.002000801
@@ -240,7 +240,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.018808365
+      time: 0.008031845
       value: 0
       inSlope: 0
       outSlope: 0
@@ -252,7 +252,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.018808365
+      time: 0.008031845
       value: 0.9916649
       inSlope: 0
       outSlope: 0

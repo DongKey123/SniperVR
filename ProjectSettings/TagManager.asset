@@ -7,6 +7,8 @@ TagManager:
   - Grass
   - Stone
   - HitObj
+  - Metal
+  - Wood
   layers:
   - Default
   - TransparentFX
