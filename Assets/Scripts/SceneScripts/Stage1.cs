@@ -47,6 +47,10 @@ public class Stage1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		if ( _delayTime > 0 )
+		{
+			_delayTime -= Time.deltaTime;
+		}
 	}
 
 	IEnumerator Tutorial()
@@ -82,6 +86,12 @@ public class Stage1 : MonoBehaviour {
 			_TargetListFront[i].GetComponent<TargetPanel>().FlipBackTarget();
 		}
 
+		//타겟 모두 내려가는것 대기.
+		_delayTime = _ShotWaitDelay;
+
+		while ( _delayTime > 0 )
+			yield return new WaitForEndOfFrame();
+
 		// 조준경 사용 사격
 		_GUIText.NextTextFromAcessText( true );
 
@@ -99,6 +109,12 @@ public class Stage1 : MonoBehaviour {
 		{
 			_TargetListFar[i].GetComponent<TargetPanel>().FlipBackTarget();
 		}
+
+		//타겟 모두 내려가는것 대기.
+		_delayTime = _ShotWaitDelay;
+
+		while ( _delayTime > 0 )
+			yield return new WaitForEndOfFrame();
 
 		//랜덤 n 사격
 		_GUIText.NextTextFromAcessText( true );
@@ -166,6 +182,8 @@ public class Stage1 : MonoBehaviour {
 		SceneManager.LoadScene( "Stage2" );
 	}
 
+	float _delayTime;
+	public float _ShotWaitDelay = 1f;
 
 	public Dongkey.CameraFade		_GUIFrontScreen;
 	public Paradox.ScreenOverayText _GUIText;
