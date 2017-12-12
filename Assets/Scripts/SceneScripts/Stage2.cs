@@ -5,6 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class Stage2 : MonoBehaviour
 {
+	void OnEnable()
+	{
+		FootStepManager.Instance.Initialized();
+	}
+
+	void OnDisable()
+	{
+		FootStepManager.Instance.Clear();
+	}
+
 	// Use this for initialization
 	void Start()
 	{

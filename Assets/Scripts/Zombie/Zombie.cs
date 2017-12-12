@@ -25,9 +25,12 @@ public class Zombie : HitObject
 	private float _minGlowlTime = 3f;
 	[SerializeField]
 	private float _maxGlowlTime = 5f;
+	[SerializeField]
+	private Transform _leftFoot;
+	[SerializeField]
+	private Transform _rightFoot;
 
-
-    int m_CurHp;
+	int m_CurHp;
     public int m_MaxHp = 1;
 
 	Vector3 m_RaycastHitPoint;
@@ -126,5 +129,25 @@ public class Zombie : HitObject
 			yield return new WaitForSeconds( UnityEngine.Random.Range(_minGlowlTime, _maxGlowlTime));
 			_soundAppear.Play(SoundAppear.SoundType.IDLE);
 		}
+	}
+
+	//외부 애니메이션에서 이벤트로 호출.
+	//왼발 : 0 오른발 : 1
+	void FootStep( int footType )
+	{
+		Vector3 footPos = Vector3.zero; ;
+		switch ( footType )
+		{
+			case 0:
+				footPos = _leftFoot.transform.position;
+				break;
+			case 1:
+				footPos = _rightFoot.transform.position;
+				break;
+			default:
+				return;
+		}
+
+		FootStepManager.Instance.PlayParticle( footPos, footType );
 	}
 }
