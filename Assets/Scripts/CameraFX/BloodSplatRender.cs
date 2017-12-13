@@ -29,7 +29,10 @@ public class BloodSplatRender : MonoBehaviour
 			return;
 
 		if ( _objOpenIndex >= _bloodSplatTransform.childCount )
-			return;
+        {
+            Invoke("ChangeScene", 1f);
+            return;
+        }
 
 		_nowTime += Time.deltaTime;
 
@@ -46,4 +49,9 @@ public class BloodSplatRender : MonoBehaviour
 	{
 		_play = true;
 	}
+
+    void ChangeScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+    }
 }
