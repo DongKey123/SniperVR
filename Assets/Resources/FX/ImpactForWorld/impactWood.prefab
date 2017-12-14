@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 19800000}
   - component: {fileID: 19900000}
   - component: {fileID: 114428267483304864}
+  - component: {fileID: 114168189875750104}
   m_Layer: 0
   m_Name: impactWood
   m_TagString: Untagged
@@ -13173,6 +13174,17 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
+--- !u!114 &114168189875750104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af585d69af5a364fa95b1fa25f3ad48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114428267483304864
 MonoBehaviour:
   m_ObjectHideFlags: 1

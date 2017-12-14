@@ -6,6 +6,8 @@ public class ImpactParticleManager : Singleton<ImpactParticleManager>
 {
 	public void Initialized()
 	{
+		Clear();
+
 		string defaltForder = "FX/ImpactForWorld/";
 		_StoneFXFrefab = Resources.Load( defaltForder + "impactConcrete" ) as GameObject;
 		_GrassFXFrefab = Resources.Load( defaltForder + "impactGlass" ) as GameObject;
@@ -74,8 +76,8 @@ public class ImpactParticleManager : Singleton<ImpactParticleManager>
 		}
 
 		ret.transform.position = position;
-		ret.transform.rotation = Quaternion.LookRotation( Vector3.up, normal );
-		ret.gameObject.SetActive( true );
+		ret.GetComponent<ParticleChildRotate>().Rotate( Quaternion.LookRotation( normal ) );
+		ret.SetActive( true );
 	}
 
 	GameObject _StoneFXFrefab;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Dongkey;
 
 public class StartSVD : VRInteraction
 {
@@ -18,7 +19,9 @@ public class StartSVD : VRInteraction
 			return;
 
 		activeSceneChange = true;
-		SceneManager.LoadScene( _nextScene );
+
+		_FadeScreen.OnFadeComplete += ChangeScene;
+		_FadeScreen.FadeOut();
 	}
 
 	public override void ControllerIn( OVRInput.Controller _inputController )
@@ -35,6 +38,11 @@ public class StartSVD : VRInteraction
 			_showUI.SetActive( false );
 	}
 
+	void ChangeScene()
+	{
+		SceneManager.LoadScene( _nextScene );
+	}
+
 	bool activeSceneChange;
 	int handCount;
 
@@ -42,4 +50,6 @@ public class StartSVD : VRInteraction
 	public AudioClip _hitSound;
 
 	public string _nextScene;
+
+	public CameraFade _FadeScreen;
 }

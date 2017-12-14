@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Stage1 : MonoBehaviour {
+public class Stage1 : MonoBehaviour
+{
+	void Awake()
+	{
+		ImpactParticleManager.Instance.Initialized();
+	}
 
 	// Use this for initialization
 	void Start ()
